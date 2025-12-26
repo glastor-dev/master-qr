@@ -1,5 +1,4 @@
 # master-qr
-
 Generador de códigos QR estáticos (un QR no “vence” por sí mismo).
 
 ## Requisitos
@@ -124,3 +123,5 @@ Para un proyecto “pro”, firma `dist/master-qr.exe` con un certificado de Cod
 - Ejemplo (ajusta rutas):
 
   - `signtool sign /f tu_cert.pfx /p TU_PASSWORD /tr http://timestamp.digicert.com /td sha256 /fd sha256 dist\master-qr.exe`
+
+
