@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "master-qr"
+version = "1.0.0"
+description = "Generador de códigos QR estáticos con GUI y CLI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Andres Antonio Cardoso"}]
+dependencies = [
+  "segno==1.6.1",
+  "Pillow==11.0.0",
+  "Flask==3.0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.3.4",
+  "pyinstaller==6.11.1",
+]
+
+[project.scripts]
+master-qr = "master_qr.cli:main"
+master-qr-gui = "master_qr.gui:main"
+master-qr-serve = "master_qr.redirect_server:main"
+
+[tool.setuptools]
+package-dir = {"" = "QR"}
+
+[tool.setuptools.packages.find]
+where = ["QR"]
+
+[tool.pytest.ini_options]
+testpaths = ["QR/tests"]

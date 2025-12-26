@@ -1,0 +1,26 @@
+# FUNDING.yml - GLASTOR README Generator
+# Configuración de financiación para GitHub.
+
+# GitHub Sponsors
+github: glastor-dev
+
+# Open Collective
+open_collective: datagroupssl
+
+# URLs personalizadas
+custom:
+  - https://paypal.me/datagroupssl
+  - https://opencollective.com/datagroupssl
+
+# Otras plataformas soportadas (completa si aplica):
+# patreon: your_username
+# ko_fi: your_username
+# buy_me_a_coffee: your_username
+# liberapay: your_username
+# issuehunt: your_username
+# otechie: your_username
+# tidelift: platform/package
+# community_bridge: project-name
+# lfx_crowdfunding: project-name
+# polar: your_username
+# thanks_dev: your_username
