@@ -26,6 +26,12 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Mejora compatibilidad de encoding en PowerShell (acentos/ñ)
+try {
+  $OutputEncoding = [System.Text.Encoding]::UTF8
+  [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+} catch { }
+
 function Get-GitHubToken {
   $token = $env:GH_TOKEN
   if (-not $token) { $token = $env:GITHUB_TOKEN }
