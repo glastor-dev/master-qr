@@ -34,7 +34,7 @@ try {
 
 function Get-GitHubToken {
   $token = $env:GH_TOKEN
-  if (-not $token) { $token = $env:GITHUB_TOKEN }
+  if (-not $token) { $token = $env:GH_TOKEN }
   if (-not $token) {
     throw "No se encontró token. Define GH_TOKEN o GITHUB_TOKEN (PAT con scope 'repo' para repos privados, o 'public_repo' para públicos)."
   }
@@ -52,7 +52,7 @@ function Get-ReleaseNotesFromChangelog {
   }
 
   $text = Get-Content -LiteralPath $ChangelogPath -Raw
-  $pattern = "(?ms)^## \\[$([regex]::Escape($VersionTag))\\].*?(?=^## \\[|\\z)"
+  $pattern = "(?ms)^## \[$([regex]::Escape($VersionTag))\].*?(?=^## \[|\z)"
   $m = [regex]::Match($text, $pattern)
   if (-not $m.Success) { return "" }
 
