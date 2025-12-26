@@ -22,6 +22,14 @@ param(
 
   [Parameter(Mandatory = $false)]
   [switch]$Prerelease
+
+  ,
+  [Parameter(Mandatory = $false)]
+  [string]$Token = ""
+
+  ,
+  [Parameter(Mandatory = $false)]
+  [switch]$PromptForToken
 )
 
 $ErrorActionPreference = "Stop"
@@ -33,12 +41,24 @@ try {
 } catch { }
 
 function Get-GitHubToken {
-  $token = $env:GH_TOKEN
-  if (-not $token) { $token = $env:GH_TOKEN }
-  if (-not $token) {
-    throw "No se encontró token. Define GH_TOKEN o GITHUB_TOKEN (PAT con scope 'repo' para repos privados, o 'public_repo' para públicos)."
+  if ($Token -and $Token.Trim().Length -gt 0) {
+    return ($Token -replace "\s", "")
   }
-  return $token
+
+  $token = $env:GH_TOKEN
+  if (-not $token) { $token = $env:GITHUB_TOKEN }
+  if ($token) {
+    return ($token -replace "\s", "")
+  }
+
+  if ($PromptForToken) {
+    $entered = Read-Host "Pega tu GitHub Token (no se mostrará)"
+    if ($entered -and $entered.Trim().Length -gt 0) {
+      return ($entered -replace "\s", "")
+    }
+  }
+
+  throw "No se encontró token. Define GH_TOKEN o GITHUB_TOKEN, o ejecuta con -PromptForToken."
 }
 
 function Get-ReleaseNotesFromChangelog {
