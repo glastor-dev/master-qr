@@ -10,6 +10,9 @@ from typing import Any
 
 @dataclass(frozen=True)
 class HistoryEntry:
+    """
+    Representa una entrada del historial de generación de QR.
+    """
     created_at: str
     data: str
     data_sha256: str
@@ -22,10 +25,16 @@ class HistoryEntry:
 
 
 def _now_iso_utc() -> str:
+    """
+    Devuelve la fecha y hora actual en formato ISO UTC (precisión a segundos).
+    """
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def default_history_path() -> Path:
+    """
+    Devuelve la ruta por defecto del archivo de historial (JSONL).
+    """
     # Guarda dentro del proyecto para que sea portable.
     # QR/salida puede borrarse; el historial queda en QR/historial.jsonl
     return Path(__file__).resolve().parents[1] / "historial.jsonl"
@@ -42,6 +51,21 @@ def append_history(
     micro: bool,
     history_path: Path | None = None,
 ) -> Path:
+    """
+    Agrega una entrada al historial de generación de QR.
+    Guarda cada entrada como una línea JSON en el archivo especificado.
+    Args:
+        data: Texto o URL codificado.
+        output: Ruta del archivo generado.
+        fmt: Formato del QR (png, svg, etc).
+        error: Nivel de corrección de error.
+        scale: Escala del QR.
+        border: Borde en módulos.
+        micro: Si es Micro QR.
+        history_path: Ruta personalizada del historial (opcional).
+    Returns:
+        Ruta al archivo de historial actualizado.
+    """
     path = history_path or default_history_path()
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -65,6 +89,10 @@ def append_history(
 
 
 def read_history(history_path: Path | None = None) -> list[dict[str, Any]]:
+    """
+    Lee todas las entradas del historial desde el archivo JSONL.
+    Devuelve una lista de diccionarios con los datos de cada QR generado.
+    """
     path = history_path or default_history_path()
     if not path.exists():
         return []
@@ -84,6 +112,11 @@ def read_history(history_path: Path | None = None) -> list[dict[str, Any]]:
 
 
 def clear_history(history_path: Path | None = None) -> Path:
+    """
+    Borra el contenido del historial de QR (no borra archivos generados).
+    Returns:
+        Ruta al archivo de historial limpiado.
+    """
     path = history_path or default_history_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("", encoding="utf-8")

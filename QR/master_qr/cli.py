@@ -8,6 +8,11 @@ from .render import save_qr
 
 
 def _build_parser() -> argparse.ArgumentParser:
+    """
+    Construye el parser de argumentos para la CLI de generación de QR.
+    Returns:
+        Instancia de ArgumentParser configurada.
+    """
     parser = argparse.ArgumentParser(
         prog="master-qr",
         description=(
@@ -89,6 +94,14 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """
+    Punto de entrada principal para la CLI de Master QR.
+    Procesa argumentos, genera el QR y actualiza el historial.
+    Args:
+        argv: Lista de argumentos de línea de comandos (opcional).
+    Returns:
+        Código de salida (0=OK, distinto de 0=error).
+    """
     parser = _build_parser()
     args = parser.parse_args(argv)
 

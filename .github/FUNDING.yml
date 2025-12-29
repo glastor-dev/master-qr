@@ -1,26 +1,113 @@
-# FUNDING.yml - GLASTOR README Generator
-# Configuración de financiación para GitHub.
+# ═══════════════════════════════════════════════════════════════════════════
+# FUNDING CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# Project: MASTER-QR-MAIN
+# Purpose: GitHub Sponsors and funding platform integration
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+#
+# This file enables the "Sponsor" button on the repository, allowing
+# contributors and users to support the project through various platforms.
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIMARY FUNDING PLATFORMS
+# ─────────────────────────────────────────────────────────────────────────────
 
 # GitHub Sponsors
+# https://github.com/sponsors/glastor-dev
 github: glastor-dev
 
 # Open Collective
+# https://opencollective.com/datagroupssl
 open_collective: datagroupssl
 
-# URLs personalizadas
+# ─────────────────────────────────────────────────────────────────────────────
+# CUSTOM FUNDING URLs
+# ─────────────────────────────────────────────────────────────────────────────
+# Direct payment links and alternative sponsorship platforms
+# Maximum: 4 custom URLs
+
 custom:
   - https://paypal.me/datagroupssl
   - https://opencollective.com/datagroupssl
 
-# Otras plataformas soportadas (completa si aplica):
+# ─────────────────────────────────────────────────────────────────────────────
+# ADDITIONAL SUPPORTED PLATFORMS
+# ─────────────────────────────────────────────────────────────────────────────
+# Uncomment and configure additional platforms as needed
+# For platform-specific documentation, visit the respective service's website
+
+# Patreon - Membership platform for creators
+# https://www.patreon.com/
 # patreon: your_username
+
+# Ko-fi - Simple donation platform
+# https://ko-fi.com/
 # ko_fi: your_username
+
+# Buy Me a Coffee - Creator support platform
+# https://www.buymeacoffee.com/
 # buy_me_a_coffee: your_username
+
+# Liberapay - Recurrent donations platform
+# https://liberapay.com/
 # liberapay: your_username
+
+# IssueHunt - Funding for open source issues
+# https://issuehunt.io/
 # issuehunt: your_username
+
+# Otechie - Technical consulting platform
+# https://otechie.com/
 # otechie: your_username
+
+# Tidelift - Enterprise-ready open source
+# https://tidelift.com/
+# Format: platform-name/package-name
+# Example: npm/package-name or pypi/package-name
 # tidelift: platform/package
+
+# Community Bridge (LFX Crowdfunding) - Linux Foundation
+# https://crowdfunding.lfx.linuxfoundation.org/
 # community_bridge: project-name
 # lfx_crowdfunding: project-name
+
+# Polar - Funding platform for developers
+# https://polar.sh/
 # polar: your_username
+
+# Thanks.dev - Automated sponsorship management
+# https://thanks.dev/
 # thanks_dev: your_username
+
+# ─────────────────────────────────────────────────────────────────────────────
+# FUNDING TRANSPARENCY
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# All contributions are used to:
+#   • Maintain and improve project infrastructure
+#   • Fund development time for new features
+#   • Support documentation and community resources
+#   • Cover operational costs (hosting, domains, services)
+#
+# For detailed financial transparency, visit:
+#   https://opencollective.com/datagroupssl
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# CONTRIBUTION TIERS & BENEFITS
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# We offer various sponsorship tiers with benefits:
+#   • Individual Supporter: Recognition in README
+#   • Bronze Sponsor: Logo in project documentation
+#   • Silver Sponsor: Priority issue response + Bronze benefits
+#   • Gold Sponsor: Direct support channel + Silver benefits
+#   • Enterprise Sponsor: Custom SLA + Gold benefits
+#
+# Visit our GitHub Sponsors page for detailed tier information.
+#
+# ═══════════════════════════════════════════════════════════════════════════
+# END OF FUNDING CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════

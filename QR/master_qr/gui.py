@@ -8,21 +8,43 @@ from tkinter import colorchooser, filedialog, messagebox, ttk
 
 from PIL import Image, ImageTk
 
-from .config import AppConfig, load_config, save_config
-from .history import append_history, clear_history, default_history_path, read_history
-from .render import save_qr
+from QR.master_qr.config import AppConfig, load_config, save_config
+from QR.master_qr.history import append_history, clear_history, default_history_path, read_history
+from QR.master_qr.render import save_qr
+from QR.master_qr.i18n import t
 
 
 class MasterQRApp(tk.Tk):
-    def __init__(self) -> None:
+
+    def _normalize_hex(self, color: str) -> str:
+        """
+        Normaliza un color hexadecimal a formato #RRGGBB.
+        Lanza ValueError si el color no es válido.
+        """
+        color = color.strip()
+        if not color:
+            raise ValueError("Color vacío")
+        if color.startswith('#'):
+            color = color[1:]
+        if len(color) == 3:
+            color = ''.join([c*2 for c in color])
+        if len(color) != 6:
+            raise ValueError("El color debe tener 6 dígitos hexadecimales")
+        try:
+            int(color, 16)
+        except ValueError:
+            raise ValueError("El color debe ser hexadecimal")
+        return f"#{color.lower()}"
+
+    THEME_LIGHT = {
+        "bg": "#f0f0f0",
+        "fg": "#222222",
+    }
+
+
+    def __init__(self):
         super().__init__()
-        self.title("Master QR")
-        self.resizable(False, False)
-
-        self._preview_photo: ImageTk.PhotoImage | None = None
-
         cfg = load_config()
-
         self.data_var = tk.StringVar()
         self.output_var = tk.StringVar(value=cfg.output)
         self.format_var = tk.StringVar(value=cfg.fmt)
@@ -33,27 +55,31 @@ class MasterQRApp(tk.Tk):
         self.dark_var = tk.StringVar(value=str(cfg.dark))
         self.light_var = tk.StringVar(value=str(cfg.light))
         self.logo_var = tk.StringVar(value=str(cfg.logo))
-        self.status_var = tk.StringVar(value="Listo")
+        self.status_var = tk.StringVar(value=t("ready"))
+
+        self.geometry("800x600")
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
 
         container = ttk.Frame(self, padding=12)
         container.grid(row=0, column=0, sticky="nsew")
 
         # Contenido
-        ttk.Label(container, text="Texto o URL:").grid(row=0, column=0, sticky="w")
+        ttk.Label(container, text=t("text_or_url")).grid(row=0, column=0, sticky="w")
         data_entry = ttk.Entry(container, textvariable=self.data_var, width=56)
         data_entry.grid(row=1, column=0, columnspan=3, sticky="we", pady=(4, 10))
         data_entry.focus_set()
 
         # Salida
-        ttk.Label(container, text="Archivo de salida:").grid(row=2, column=0, sticky="w")
+        ttk.Label(container, text=t("output_file")).grid(row=2, column=0, sticky="w")
         out_entry = ttk.Entry(container, textvariable=self.output_var, width=44)
         out_entry.grid(row=3, column=0, columnspan=2, sticky="we", pady=(4, 10))
-        ttk.Button(container, text="Elegir...", command=self._choose_output).grid(
+        ttk.Button(container, text=t("choose_output"), command=self._choose_output).grid(
             row=3, column=2, sticky="e", padx=(8, 0), pady=(4, 10)
         )
 
         # Opciones
-        ttk.Label(container, text="Formato:").grid(row=4, column=0, sticky="w")
+        ttk.Label(container, text=t("format")).grid(row=4, column=0, sticky="w")
         format_combo = ttk.Combobox(
             container,
             textvariable=self.format_var,
@@ -64,7 +90,7 @@ class MasterQRApp(tk.Tk):
         format_combo.grid(row=5, column=0, sticky="w", pady=(4, 10))
         format_combo.bind("<<ComboboxSelected>>", lambda _e: self._sync_logo_state())
 
-        ttk.Label(container, text="Error:").grid(row=4, column=1, sticky="w")
+        ttk.Label(container, text=t("error_level")).grid(row=4, column=1, sticky="w")
         error_combo = ttk.Combobox(
             container,
             textvariable=self.error_var,
@@ -74,56 +100,183 @@ class MasterQRApp(tk.Tk):
         )
         error_combo.grid(row=5, column=1, sticky="w", pady=(4, 10))
 
-        ttk.Label(container, text="Escala:").grid(row=4, column=2, sticky="w")
+        ttk.Label(container, text=t("scale")).grid(row=4, column=2, sticky="w")
         scale_spin = ttk.Spinbox(
             container, from_=1, to=50, textvariable=self.scale_var, width=7
         )
         scale_spin.grid(row=5, column=2, sticky="w", pady=(4, 10))
 
-        ttk.Label(container, text="Borde:").grid(row=6, column=0, sticky="w")
+        ttk.Label(container, text=t("border")).grid(row=6, column=0, sticky="w")
         border_spin = ttk.Spinbox(
             container, from_=0, to=20, textvariable=self.border_var, width=7
         )
         border_spin.grid(row=7, column=0, sticky="w", pady=(4, 10))
 
-        ttk.Checkbutton(container, text="Micro QR", variable=self.micro_var).grid(
+        ttk.Checkbutton(container, text=t("micro_qr"), variable=self.micro_var).grid(
             row=6, column=1, sticky="w", pady=(0, 12)
         )
 
-        ttk.Label(container, text="Color (oscuro):").grid(row=7, column=1, sticky="w")
+        ttk.Label(container, text=t("dark_color")).grid(row=7, column=1, sticky="w")
         dark_entry = ttk.Entry(container, textvariable=self.dark_var, width=12)
         dark_entry.grid(row=8, column=1, sticky="w", pady=(4, 10))
-        ttk.Button(container, text="Elegir", command=self._pick_dark).grid(
+        ttk.Button(container, text=t("choose_dark"), command=self._pick_dark).grid(
             row=8, column=1, sticky="e", pady=(4, 10)
         )
 
-        ttk.Label(container, text="Color (claro):").grid(row=7, column=2, sticky="w")
+        ttk.Label(container, text=t("light_color")).grid(row=7, column=2, sticky="w")
         light_entry = ttk.Entry(container, textvariable=self.light_var, width=12)
         light_entry.grid(row=8, column=2, sticky="w", pady=(4, 10))
-        ttk.Button(container, text="Elegir", command=self._pick_light).grid(
+        ttk.Button(container, text=t("choose_light"), command=self._pick_light).grid(
             row=8, column=2, sticky="e", pady=(4, 10)
         )
 
-        ttk.Label(container, text="Logo (solo PNG):").grid(row=9, column=0, sticky="w")
+        ttk.Label(container, text=t("logo")).grid(row=9, column=0, sticky="w")
         self.logo_entry = ttk.Entry(container, textvariable=self.logo_var, width=44)
         self.logo_entry.grid(row=10, column=0, columnspan=2, sticky="we", pady=(4, 10))
-        self.logo_button = ttk.Button(container, text="Elegir...", command=self._choose_logo)
+        self.logo_button = ttk.Button(container, text=t("choose_logo"), command=self._choose_logo)
         self.logo_button.grid(
             row=10, column=2, sticky="e", padx=(8, 0), pady=(4, 10)
         )
 
         # Acciones
-        ttk.Button(container, text="Ver historial", command=self._show_history).grid(
+        ttk.Button(container, text=t("view_history"), command=self._show_history).grid(
             row=11, column=0, sticky="w", pady=(0, 12)
         )
-        ttk.Button(container, text="Vista previa", command=self._preview).grid(
-            row=11, column=1, sticky="w", pady=(0, 12)
-        )
-        ttk.Button(container, text="Generar QR", command=self._generate).grid(
+        # Vista previa eliminada
+        ttk.Button(container, text=t("generate_qr"), command=self._generate).grid(
             row=11, column=2, sticky="e", pady=(0, 12)
         )
 
-        ttk.Label(container, text="Vista previa (PNG):").grid(row=12, column=0, sticky="w")
+        # Vista previa eliminada
+
+        ttk.Label(container, textvariable=self.status_var, foreground="gray").grid(
+            row=14, column=0, columnspan=3, sticky="w"
+        )
+
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+        self._sync_logo_state()
+
+        for i in range(3):
+            container.columnconfigure(i, weight=1)
+
+    def _effective_output_path(self):
+        """
+        Devuelve la ruta de salida con la extensión correcta según el formato seleccionado.
+        """
+        out_path = Path(self.output_var.get().strip() or "qr.png")
+        fmt = (self.format_var.get() or "PNG").lower()
+        desired_suffix = f".{fmt}"
+        if out_path.suffix:
+            out_path = out_path.with_suffix(desired_suffix)
+        else:
+            out_path = Path(str(out_path) + desired_suffix)
+        return out_path
+
+    def _save_config(self):
+        """
+        Guarda la configuración actual en el archivo de configuración.
+        """
+        cfg = AppConfig(
+            output=self.output_var.get(),
+            fmt=self.format_var.get(),
+            scale=self.scale_var.get(),
+            border=self.border_var.get(),
+            error=self.error_var.get(),
+            micro=self.micro_var.get(),
+            dark=self.dark_var.get(),
+            light=self.light_var.get(),
+            logo=self.logo_var.get(),
+        )
+        save_config(cfg)
+        container = ttk.Frame(self, padding=12)
+        container.grid(row=0, column=0, sticky="nsew")
+
+        # Contenido
+        ttk.Label(container, text=t("text_or_url")).grid(row=0, column=0, sticky="w")
+        data_entry = ttk.Entry(container, textvariable=self.data_var, width=56)
+        data_entry.grid(row=1, column=0, columnspan=3, sticky="we", pady=(4, 10))
+        data_entry.focus_set()
+
+        # Salida
+        ttk.Label(container, text=t("output_file")).grid(row=2, column=0, sticky="w")
+        out_entry = ttk.Entry(container, textvariable=self.output_var, width=44)
+        out_entry.grid(row=3, column=0, columnspan=2, sticky="we", pady=(4, 10))
+        ttk.Button(container, text=t("choose_output"), command=self._choose_output).grid(
+            row=3, column=2, sticky="e", padx=(8, 0), pady=(4, 10)
+        )
+
+        # Opciones
+        ttk.Label(container, text=t("format")).grid(row=4, column=0, sticky="w")
+        format_combo = ttk.Combobox(
+            container,
+            textvariable=self.format_var,
+            values=["PNG", "SVG", "PDF", "EPS", "TXT"],
+            state="readonly",
+            width=8,
+        )
+        format_combo.grid(row=5, column=0, sticky="w", pady=(4, 10))
+        format_combo.bind("<<ComboboxSelected>>", lambda _e: self._sync_logo_state())
+
+        ttk.Label(container, text=t("error_level")).grid(row=4, column=1, sticky="w")
+        error_combo = ttk.Combobox(
+            container,
+            textvariable=self.error_var,
+            values=["L", "M", "Q", "H"],
+            state="readonly",
+            width=6,
+        )
+        error_combo.grid(row=5, column=1, sticky="w", pady=(4, 10))
+
+        ttk.Label(container, text=t("scale")).grid(row=4, column=2, sticky="w")
+        scale_spin = ttk.Spinbox(
+            container, from_=1, to=50, textvariable=self.scale_var, width=7
+        )
+        scale_spin.grid(row=5, column=2, sticky="w", pady=(4, 10))
+
+        ttk.Label(container, text=t("border")).grid(row=6, column=0, sticky="w")
+        border_spin = ttk.Spinbox(
+            container, from_=0, to=20, textvariable=self.border_var, width=7
+        )
+        border_spin.grid(row=7, column=0, sticky="w", pady=(4, 10))
+
+        ttk.Checkbutton(container, text=t("micro_qr"), variable=self.micro_var).grid(
+            row=6, column=1, sticky="w", pady=(0, 12)
+        )
+
+        ttk.Label(container, text=t("dark_color")).grid(row=7, column=1, sticky="w")
+        dark_entry = ttk.Entry(container, textvariable=self.dark_var, width=12)
+        dark_entry.grid(row=8, column=1, sticky="w", pady=(4, 10))
+        ttk.Button(container, text=t("choose_dark"), command=self._pick_dark).grid(
+            row=8, column=1, sticky="e", pady=(4, 10)
+        )
+
+        ttk.Label(container, text=t("light_color")).grid(row=7, column=2, sticky="w")
+        light_entry = ttk.Entry(container, textvariable=self.light_var, width=12)
+        light_entry.grid(row=8, column=2, sticky="w", pady=(4, 10))
+        ttk.Button(container, text=t("choose_light"), command=self._pick_light).grid(
+            row=8, column=2, sticky="e", pady=(4, 10)
+        )
+
+        ttk.Label(container, text=t("logo")).grid(row=9, column=0, sticky="w")
+        self.logo_entry = ttk.Entry(container, textvariable=self.logo_var, width=44)
+        self.logo_entry.grid(row=10, column=0, columnspan=2, sticky="we", pady=(4, 10))
+        self.logo_button = ttk.Button(container, text=t("choose_logo"), command=self._choose_logo)
+        self.logo_button.grid(
+            row=10, column=2, sticky="e", padx=(8, 0), pady=(4, 10)
+        )
+
+        # Acciones
+        ttk.Button(container, text=t("view_history"), command=self._show_history).grid(
+            row=11, column=0, sticky="w", pady=(0, 12)
+        )
+        ttk.Button(container, text=t("preview"), command=self._preview).grid(
+            row=11, column=1, sticky="w", pady=(0, 12)
+        )
+        ttk.Button(container, text=t("generate_qr"), command=self._generate).grid(
+            row=11, column=2, sticky="e", pady=(0, 12)
+        )
+
+        ttk.Label(container, text=t("preview_png")).grid(row=12, column=0, sticky="w")
         self.preview_label = ttk.Label(container)
         self.preview_label.grid(row=13, column=0, columnspan=3, sticky="w")
 
@@ -137,7 +290,24 @@ class MasterQRApp(tk.Tk):
         for i in range(3):
             container.columnconfigure(i, weight=1)
 
+    def _sync_logo_state(self):
+        """
+        Habilita o deshabilita el campo de logo según el formato seleccionado.
+        Solo PNG permite logo.
+        """
+        fmt = (self.format_var.get() or "PNG").upper()
+        state = "normal" if fmt == "PNG" else "disabled"
+        self.logo_entry.config(state=state)
+        self.logo_button.config(state=state)
+
+    def _on_close(self):
+        self.destroy()
+
     def _choose_output(self) -> None:
+        """
+        Abre un diálogo para elegir la ruta de salida del archivo QR.
+        Actualiza la variable de salida si el usuario selecciona un archivo.
+        """
         fmt = (self.format_var.get() or "PNG").lower()
         ext = f".{fmt}"
 
@@ -163,6 +333,9 @@ class MasterQRApp(tk.Tk):
             self.output_var.set(path)
 
     def _choose_logo(self) -> None:
+        """
+        Abre un diálogo para elegir el archivo de logo a incrustar en el QR.
+        """
         path = filedialog.askopenfilename(
             title="Elegir logo (PNG/JPG)",
             filetypes=[
@@ -176,57 +349,23 @@ class MasterQRApp(tk.Tk):
             self.logo_var.set(path)
 
     def _pick_dark(self) -> None:
+        """
+        Abre un selector de color para el color oscuro del QR.
+        """
         color = colorchooser.askcolor(title="Color oscuro")
         if color and color[1]:
             self.dark_var.set(color[1])
 
     def _pick_light(self) -> None:
-            def _sync_logo_state(self) -> None:
-                is_png = (self.format_var.get() or "PNG").upper() == "PNG"
-                state = "normal" if is_png else "disabled"
-                self.logo_entry.configure(state=state)
-                self.logo_button.configure(state=state)
-                if not is_png:
-                    self.logo_var.set("")
-
-            def _normalize_hex(self, value: str) -> str:
-                v = value.strip()
-                if not v:
-                    return v
-                if not v.startswith("#"):
-                    raise ValueError("El color debe ser hex, ej: #RRGGBB")
-                h = v[1:]
-                if len(h) == 3:
-                    h = "".join(ch * 2 for ch in h)
-                if len(h) != 6 or any(c not in "0123456789abcdefABCDEF" for c in h):
-                    raise ValueError("Color inválido. Usa #RRGGBB o #RGB")
-                return "#" + h.upper()
-
-            def _save_config(self) -> None:
-                cfg = AppConfig(
-                    output=self.output_var.get(),
-                    fmt=self.format_var.get(),
-                    scale=int(self.scale_var.get()),
-                    border=int(self.border_var.get()),
-                    error=self.error_var.get(),
-                    micro=bool(self.micro_var.get()),
-                    dark=self.dark_var.get(),
-                    light=self.light_var.get(),
-                    logo=self.logo_var.get(),
-                )
-                save_config(cfg)
-
-            def _on_close(self) -> None:
-                # Guarda settings sin molestar al usuario.
-                try:
-                    self._save_config()
-                finally:
-                    self.destroy()
+        """
+        Abre un selector de color para el color claro del QR.
+        """
         color = colorchooser.askcolor(title="Color claro")
         if color and color[1]:
             self.light_var.set(color[1])
-
-    def _effective_output_path(self) -> Path:
+        """
+        Calcula la ruta de salida efectiva según la extensión y formato seleccionados.
+        """
         out_path = Path(self.output_var.get().strip() or "qr.png")
         fmt = (self.format_var.get() or "PNG").lower()
         desired_suffix = f".{fmt}"
@@ -239,86 +378,56 @@ class MasterQRApp(tk.Tk):
         return out_path
 
     def _open_path(self, path: str) -> None:
+        """
+        Intenta abrir un archivo o carpeta usando el explorador del sistema.
+        """
         try:
-            os.startfile(path)  # type: ignore[attr-defined]
-        except Exception as exc:
-            messagebox.showerror("No se pudo abrir", str(exc))
+            if sys.platform == "win32":
+                os.startfile(path)
+            elif sys.platform == "darwin":
+                subprocess.run(["open", path], check=True)
+            else:
+                subprocess.run(["xdg-open", path], check=True)
+        except Exception:
+            messagebox.showerror(t("error"), t("open_failed") + f": {path}")
 
     def _copy_to_clipboard(self, text: str) -> None:
+        """
+        Copia el texto dado al portapapeles del sistema.
+        """
         self.clipboard_clear()
         self.clipboard_append(text)
         self.update_idletasks()
         self.status_var.set("Copiado al portapapeles")
 
-    def _preview(self) -> None:
-        data = self.data_var.get().strip()
-        if not data:
-            messagebox.showerror("Falta contenido", "Ingresa un texto o URL.")
-            return
-
-        if (self.format_var.get() or "PNG").upper() != "PNG":
-            messagebox.showinfo("Vista previa", "La vista previa solo aplica a PNG.")
-            return
-
-        try:
-            tmp = Path(tempfile.gettempdir()) / "master_qr_preview.png"
-
-            logo_path = Path(self.logo_var.get()) if self.logo_var.get().strip() else None
-            error = self.error_var.get()
-            if logo_path is not None and error != "H":
-                error = "H"
-
-            dark = self._normalize_hex(self.dark_var.get()) if self.dark_var.get().strip() else None
-            light = self._normalize_hex(self.light_var.get()) if self.light_var.get().strip() else None
-            if dark:
-                self.dark_var.set(dark)
-            if light:
-                self.light_var.set(light)
-
-            save_qr(
-                data=data,
-                output=tmp,
-                error=error,
-                micro=self.micro_var.get(),
-                scale=int(self.scale_var.get()),
-                border=int(self.border_var.get()),
-                dark=dark,
-                light=light,
-                logo=logo_path,
-            )
-
-            img = Image.open(tmp)
-            img.thumbnail((220, 220), Image.Resampling.LANCZOS)
-            self._preview_photo = ImageTk.PhotoImage(img)
-            self.preview_label.configure(image=self._preview_photo)
-            self.status_var.set("Vista previa actualizada")
-            self._save_config()
-        except Exception as exc:
-            messagebox.showerror("Error", str(exc))
-            self.status_var.set("Error en vista previa")
+    # Vista previa eliminada
 
     def _generate(self) -> None:
+        """
+        Genera el QR con las opciones actuales y lo guarda en disco.
+        Actualiza el historial y muestra mensajes de éxito o error.
+        """
         data = self.data_var.get().strip()
         if not data:
-            messagebox.showerror("Falta contenido", "Ingresa un texto o URL.")
+            messagebox.showerror(t("missing_content"), t("enter_text_url"))
             return
 
         out_path = self._effective_output_path()
 
         if out_path.suffix.lower() not in {".png", ".svg", ".pdf", ".eps", ".txt"}:
             messagebox.showerror(
-                "Formato no soportado",
-                "Usa extensión .png, .svg, .pdf, .eps o .txt.",
+                t("format_not_supported"),
+                t("use_png_svg_pdf_eps_txt"),
             )
             return
 
         if out_path.exists():
             ok = messagebox.askyesno(
-                "Sobrescribir",
-                "El archivo ya existe. ¿Deseas sobrescribirlo?",
+                t("overwrite"),
+                t("file_exists"),
             )
             if not ok:
-                self.status_var.set("Cancelado")
+                self.status_var.set(t("cancelled"))
                 return
 
         try:
@@ -329,12 +438,13 @@ class MasterQRApp(tk.Tk):
             if light:
                 self.light_var.set(light)
         except Exception as exc:
-            messagebox.showerror("Color", str(exc))
+            print(f"[DEBUG] Error normalizando colores: {exc}")
+            messagebox.showerror(t("color"), str(exc))
             return
 
         logo_path = Path(self.logo_var.get()) if self.logo_var.get().strip() else None
         if logo_path is not None and out_path.suffix.lower() != ".png":
-            messagebox.showerror("Logo", "El logo solo se soporta con salida PNG.")
+            messagebox.showerror(t("logo"), t("logo_only_png"))
             return
 
         error = self.error_var.get()
@@ -342,6 +452,16 @@ class MasterQRApp(tk.Tk):
             error = "H"
 
         try:
+            print(f"[DEBUG] Generando QR con parámetros:")
+            print(f"  data={data!r}")
+            print(f"  output={out_path}")
+            print(f"  error={error}")
+            print(f"  micro={self.micro_var.get()}")
+            print(f"  scale={self.scale_var.get()}")
+            print(f"  border={self.border_var.get()}")
+            print(f"  dark={dark}")
+            print(f"  light={light}")
+            print(f"  logo={logo_path}")
             out_path.parent.mkdir(parents=True, exist_ok=True)
             save_qr(
                 data=data,
@@ -365,26 +485,33 @@ class MasterQRApp(tk.Tk):
                 micro=bool(self.micro_var.get()),
             )
         except Exception as exc:  # pragma: no cover
-            messagebox.showerror("Error", str(exc))
-            self.status_var.set("Error al generar")
+            import traceback
+            print(f"[ERROR] Excepción al generar QR: {exc}")
+            traceback.print_exc()
+            messagebox.showerror(t("error"), str(exc))
+            self.status_var.set(t("error_generate"))
             return
 
         self.output_var.set(str(out_path))
-        self.status_var.set(f"Generado: {out_path}")
+        self.status_var.set(t("generated", out_path=out_path))
+        messagebox.showinfo(t("ok"), t("qr_generated_in", out_path=out_path))
         messagebox.showinfo("OK", f"QR generado en:\n{out_path}")
         self._save_config()
 
     def _show_history(self) -> None:
+        """
+        Muestra una ventana con el historial de QRs generados y acciones sobre ellos.
+        """
         items = read_history()
         if not items:
             messagebox.showinfo(
-                "Historial",
-                f"Aún no hay historial.\n\nArchivo: {default_history_path()}",
+                t("history"),
+                t("no_history", path=default_history_path()),
             )
             return
 
         win = tk.Toplevel(self)
-        win.title("Historial")
+        win.title(t("history"))
         win.resizable(True, True)
 
         frame = ttk.Frame(win, padding=12)
@@ -392,7 +519,7 @@ class MasterQRApp(tk.Tk):
         win.columnconfigure(0, weight=1)
         win.rowconfigure(0, weight=1)
 
-        ttk.Label(frame, text=f"Archivo: {default_history_path()}").grid(
+        ttk.Label(frame, text=t("open_file") + f": {default_history_path()}").grid(
             row=0, column=0, columnspan=2, sticky="w", pady=(0, 8)
         )
 
@@ -455,31 +582,31 @@ class MasterQRApp(tk.Tk):
 
         def on_clear() -> None:
             ok = messagebox.askyesno(
-                "Limpiar historial",
-                "¿Deseas borrar el historial? (No borra los archivos generados)",
+                t("clear"),
+                t("clear_history"),
             )
             if not ok:
                 return
             clear_history()
             listbox.delete(0, tk.END)
-            self.status_var.set("Historial limpiado")
+            self.status_var.set(t("history_cleared"))
 
-        ttk.Button(actions, text="Abrir archivo", command=on_open).grid(
+        ttk.Button(actions, text=t("open_file"), command=on_open).grid(
             row=0, column=0, sticky="w"
         )
-        ttk.Button(actions, text="Abrir carpeta", command=on_open_folder).grid(
+        ttk.Button(actions, text=t("open_folder"), command=on_open_folder).grid(
             row=0, column=1, sticky="w", padx=(8, 0)
         )
-        ttk.Button(actions, text="Copiar ruta", command=on_copy_path).grid(
+        ttk.Button(actions, text=t("copy_path"), command=on_copy_path).grid(
             row=0, column=2, sticky="w", padx=(8, 0)
         )
-        ttk.Button(actions, text="Copiar contenido", command=on_copy_data).grid(
+        ttk.Button(actions, text=t("copy_content"), command=on_copy_data).grid(
             row=0, column=3, sticky="w", padx=(8, 0)
         )
-        ttk.Button(actions, text="Limpiar", command=on_clear).grid(
+        ttk.Button(actions, text=t("clear"), command=on_clear).grid(
             row=0, column=4, sticky="w", padx=(8, 0)
         )
-        ttk.Button(actions, text="Cerrar", command=win.destroy).grid(
+        ttk.Button(actions, text=t("close"), command=win.destroy).grid(
             row=0, column=5, sticky="e"
         )
 
@@ -490,6 +617,9 @@ class MasterQRApp(tk.Tk):
 
 
 def main() -> int:
+    """
+    Punto de entrada para lanzar la aplicación GUI de Master QR.
+    """
     app = MasterQRApp()
     app.mainloop()
     return 0

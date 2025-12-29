@@ -1,140 +1,233 @@
-# Sponsors 🌟
-
-<p align="center">
-  <img src="https://i.postimg.cc/L5p7bfXJ/questions.png" width="100" alt="Sponsors Icon">
-</p>
-
-## Acknowledgments
-
-We deeply appreciate our sponsors and contributors who support GLASTOR DEV growth. Consider joining them to help sustain open-source development.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Money%20Bag.webp" width="130" alt="Sponsorship" loading="lazy">
-</p>
-
----
-
-## Sponsorship Tiers
-
-### 🌟 Individual Sponsor
-
-- Monthly sponsorships or one-time donations accepted
-- Perfect for users who want to show appreciation for our work
-- Equivalent to "buying us a coffee" to support ongoing development
-
-### 🏢 Corporate Sponsor
-
-- Gain exposure to 1.7M+ developers worldwide
-- Brand visibility across our GitHub projects and website
-- Recurring sponsors receive logo placements
-- Excellent developer community engagement opportunity
-
----
-
-## Premium Sponsorships
-
-### 🏆 Global Special Sponsor <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Up%20Button.webp" width="40" alt="Special" loading="lazy">
-
-- **Exclusive** global position (1 available)
-- Prime logo placement on all Glastor DEV properties
-- Maximum visibility across all platforms
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Activity/Video%20Game.webp" width="200" alt="Premium Sponsor" loading="lazy">
-</p>
-
----
-
-### 💎 Platinum ($2,000/month) <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Dizzy.webp" width="30" alt="Platinum" loading="lazy">
-
-- Featured logo on GLASTOR DEV homepage
-- Prominent sidebar placement on all content pages
-- Highlighted position in README files
+# 💝 Sponsor GLASTOR
 
 <div align="center">
-  <a href="#" aria-label="Aspid"><img width="280" src="https://i.postimg.cc/F1ttmqDH/Aspid.png" alt="Aspid logo" loading="lazy"></a>
-  &nbsp;&nbsp;
-  <a href="#" aria-label="Nexperia"><img width="280" src="https://i.postimg.cc/nrQznYd2/nexperia-logo.png" alt="Nexperia logo" loading="lazy"></a>
+
+**Support open source development and help build better tools for developers worldwide**
+
+[![GitHub Sponsors](https://img.shields.io/badge/💎_Sponsor_on_GitHub-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/glastor-dev)
+[![PayPal](https://img.shields.io/badge/💳_Donate_via_PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/datagroupssl)
+
 </div>
 
 ---
 
-### 🥇 Gold ($500/month) <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Currency%20Exchange.webp" width="30" alt="Gold" loading="lazy">
+## 🎯 Why Sponsor?
 
-- Large logo on GLASTOR DEV homepage
-- Prominent README placement
+Your sponsorship enables:
+
+- ⏰ **Dedicated development time** - 10-20 hours/month on open source projects
+- 📚 **Better documentation** - Comprehensive guides and tutorials
+- 🐛 **Faster bug fixes** - Priority response to issues and PRs
+- ✨ **New features** - Tools and utilities that benefit the entire community
+- 🎓 **Educational content** - Videos, articles, and workshops
+
+Every contribution helps maintain and improve tools used by developers daily.
+
+---
+
+## 🏆 Sponsorship Tiers
+
+### 💎 Premium Tier - $500/month
+
+**Perfect for companies who depend on our tools**
+
+**Benefits:**
+- 🎖️ **Large logo** on project README (above the fold)
+- 🌐 **Featured mention** on glastor.es homepage
+- 📢 **Social media shoutout** when you join
+- 💬 **Direct communication** channel for technical questions
+- 🎁 **Early access** to new tools and features
+- 📊 **Monthly reports** on development progress
+
+**Current Premium Sponsors:**
 
 <div align="center">
-  <a href="#" aria-label="Spark"><img width="220" src="https://i.postimg.cc/dDP03kpY/Spark-New-Zealand-Logo-wine.png" alt="Spark logo" loading="lazy"></a>
-  &nbsp;&nbsp;
-  <a href="#" aria-label="Spain Cares"><img width="220" src="https://i.postimg.cc/8CnN9yQj/saoj.png" alt="Spain Cares logo" loading="lazy"></a>
+
+*Become our first Premium Sponsor! Your company logo will appear here.*
+
+[![Become a Premium Sponsor](https://img.shields.io/badge/Become_Premium_Sponsor-EA4AAA?style=for-the-badge)](https://github.com/sponsors/glastor-dev/sponsorships?tier_id=premium)
+
 </div>
 
 ---
 
-### 🥈 Silver ($250/month) <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Exclamation%20Mark.webp" width="25" alt="Silver" loading="lazy">
+### 🥇 Gold Tier - $250/month
 
-- Medium logo in CONTRIBUTORS.md
+**For companies who value open source**
+
+**Benefits:**
+- 🏷️ **Medium logo** in project README
+- 📝 **Name in CONTRIBUTORS.md** with special mention
+- 💬 **Priority support** for technical inquiries
+- 🎁 **Early access** to new releases
+
+**Current Gold Sponsors:**
 
 <div align="center">
-  <a href="#" aria-label="NSolid"><img width="180" src="https://i.postimg.cc/G2ft0Sj9/nsolid-1.png" alt="NSolid logo" loading="lazy"></a>
+
+*Be the first Gold Sponsor! Support open source development.*
+
+[![Become a Gold Sponsor](https://img.shields.io/badge/Become_Gold_Sponsor-FFD700?style=for-the-badge)](https://github.com/sponsors/glastor-dev/sponsorships?tier_id=gold)
+
 </div>
 
 ---
 
-### 🥉 Bronze ($100/month) <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Zzz.webp" width="25" alt="Bronze" loading="lazy">
+### 🥈 Silver Tier - $100/month
 
-- Small logo in CONTRIBUTORS.md
+**Show your company supports open source**
+
+**Benefits:**
+- 📛 **Small logo** in CONTRIBUTORS.md
+- 🙏 **Special thanks** in release notes
+- 📧 **Quarterly updates** on project development
+
+**Current Silver Sponsors:**
 
 <div align="center">
-  <a href="#" aria-label="Python Channel"><img width="50" src="https://i.postimg.cc/MHynymyT/canal4.jpg" alt="Python Channel logo" loading="lazy"></a>
+
+*Your company could be here! Join as a Silver Sponsor.*
+
+[![Become a Silver Sponsor](https://img.shields.io/badge/Become_Silver_Sponsor-C0C0C0?style=for-the-badge)](https://github.com/sponsors/glastor-dev/sponsorships?tier_id=silver)
+
 </div>
 
 ---
 
-## Contributors ($20/month)
+### ☕ Individual Tier - $20/month
 
-- Name listing in CONTRIBUTORS.md
-- Our appreciation for your support
+**Perfect for developers who use our tools**
 
-🎀 **Fabien Potencier** ([@fabpot](https://github.com/fabpot))
-🎀 **Nicolas Grekas** ([@nicolas-grekas](https://github.com/nicolas-grekas))
-🎀 **Alexander M. Turek** ([@derrabus](https://github.com/derrabus))
+**Benefits:**
+- 📝 **Name listed** in CONTRIBUTORS.md
+- 🙏 **Heartfelt appreciation** from the maintainer
+- 💌 **Sponsor-only updates** on development
 
----
-
-## Payment Methods <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Travel%20and%20Places/Classical%20Building.webp" width="25" alt="Payment" loading="lazy">
-
-We accept multiple payment options globally:
+**Support open source with the price of a few coffees per month!**
 
 <div align="center">
-  <a href="#" aria-label="Visa"><img width="45" src="./src/svg-png/visa.svg" alt="Visa" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="Mastercard"><img width="45" src="./src/svg-png/mastercard-alt.svg" alt="Mastercard" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="Apple Pay"><img width="45" src="./src/svg-png/apple-pay.svg" alt="Apple Pay" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="Google Pay"><img width="45" src="./src/svg-png/google-pay.svg" alt="Google Pay" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="Bitcoin"><img width="40" src="./src/svg-png/bitcoin-icon.svg" alt="Bitcoin" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="TON"><img width="40" src="./src/svg-png/toncoin-ton-logo.svg" alt="TON" loading="lazy"></a>
-  &nbsp;
-  <a href="#" aria-label="USDT"><img width="40" src="./src/svg-png/tether-usdt-logo.svg" alt="USDT" loading="lazy"></a>
+
+[![Become an Individual Sponsor](https://img.shields.io/badge/Become_Individual_Sponsor-28a745?style=for-the-badge)](https://github.com/sponsors/glastor-dev/sponsorships?tier_id=individual)
+
 </div>
-
-<details>
-  <summary><h3>📤 Bank Transfers</h3></summary>
-
-🇪🇪 Estonia: `0070067230004033073612`
-<a href="#" aria-label="Bitcoin"><img width="20" src="./src/svg-png/bitcoin-icon.svg" alt="Bitcoin" loading="lazy"></a> `1LiJgSrQc4tTyBcsVK6DMxMC3J8DJ5FzMD`
-<a href="#" aria-label="USDT"><img width="20" src="./src/svg-png/tether-usdt-logo.svg" alt="USDT" loading="lazy"></a> TRC20: `TRbepPuT16zyViiyr4vBrG614XhFcjL9WV`
-<a href="#" aria-label="TON"><img width="20" src="./src/svg-png/toncoin-ton-logo.svg" alt="TON" loading="lazy"></a> `UQAukJzjgRpPJ6aMSWqsttfiBycB7ekDcNvDE9TSQcJyRyzD`
-
-</details>
 
 ---
 
-## License 📜
+### 💰 One-Time Donations
 
-Copyright © 2013-2025 GLASTOR DEV. All rights reserved.
+**Not ready for recurring support? Make a one-time contribution!**
+
+<div align="center">
+
+[![Donate with PayPal](https://img.shields.io/badge/PayPal-Donate_Now-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/datagroupssl?country.x=AR&locale.x=es_XC)
+
+</div>
+
+One-time donations of any amount are deeply appreciated and help keep the lights on! ✨
+
+---
+
+## 🌟 Current Sponsors
+
+### 💎 Premium Sponsors
+
+*Your company logo could be here! [Become a sponsor](https://github.com/sponsors/glastor-dev)*
+
+### 🥇 Gold Sponsors
+
+*Be the first to support at this level!*
+
+### 🥈 Silver Sponsors
+
+*Show your company cares about open source!*
+
+### ☕ Individual Supporters
+
+*Thank you to our individual sponsors!*
+
+When we have sponsors, they will be listed here with proper attribution.
+
+---
+
+## 💳 Payment Methods
+
+We accept sponsorships through:
+
+<div align="center">
+
+**Primary:**
+- 💎 [GitHub Sponsors](https://github.com/sponsors/glastor-dev) *(Recommended)*
+- 💳 [PayPal](https://paypal.me/datagroupssl)
+
+**Alternative:** Contact us at glastor.info@gmail.com for custom arrangements
+
+</div>
+
+---
+
+## ❓ Frequently Asked Questions
+
+### Can I sponsor anonymously?
+Yes! GitHub Sponsors allows anonymous sponsorships.
+
+### What happens if I need to cancel?
+No problem. You can cancel anytime without penalties.
+
+### Do you offer custom sponsorship packages?
+Yes! For sponsorships over $500/month, we can create custom packages. Contact us at glastor.info@gmail.com
+
+### Can I sponsor specific features?
+Absolutely! Platinum and Premium sponsors can influence the roadmap. Contact us to discuss.
+
+### Are donations tax-deductible?
+This depends on your country's tax laws. GLASTOR is not a registered non-profit, so donations are typically not tax-deductible. Consult your tax advisor.
+
+---
+
+## 🤝 Other Ways to Support
+
+Not ready to sponsor financially? You can still help!
+
+- ⭐ **Star our repositories** on GitHub
+- 🐛 **Report bugs** and suggest improvements
+- 🔀 **Contribute code** via Pull Requests
+- 📢 **Share our projects** with your network
+- 📝 **Write about us** on your blog or social media
+- 💬 **Help others** in Issues and Discussions
+
+Every contribution, big or small, makes a difference! 🙏
+
+---
+
+## 📧 Questions?
+
+Have questions about sponsorship?
+
+- 📧 Email: glastor.info@gmail.com
+- 💬 Telegram: [@zerhocool](https://t.me/zerhocool)
+- 🐙 GitHub: [Open an issue](https://github.com/glastor-dev/glastor-dev/issues/new?title=Sponsorship%20Question)
+
+We typically respond within 24 hours.
+
+---
+
+## 🙏 Thank You
+
+Your support makes it possible to dedicate time to open source development. Every sponsor, regardless of tier, plays a vital role in making better tools for the developer community.
+
+**Together, we're building the future of open source.** 🚀
+
+---
+
+<div align="center">
+
+**Ready to make an impact?**
+
+[![Sponsor Now](https://img.shields.io/badge/💝_Become_a_Sponsor-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/glastor-dev)
+
+---
+
+© 2010-2025 GLASTOR® | Marca registrada en Argentina (INPI)  
+Maintained with ❤️ by [@glastor-dev](https://github.com/glastor-dev)
+
+</div>
